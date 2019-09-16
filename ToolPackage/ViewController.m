@@ -15,9 +15,6 @@
 
 @interface ViewController ()
 
-@property (nonatomic, strong) NSThread *subThread;
-@property (nonatomic, assign) BOOL trigger;
-
 @end
 
 @implementation ViewController
@@ -28,32 +25,10 @@
 }
 
 - (IBAction)connect:(id)sender {
-
-    _subThread = [[NSThread alloc] initWithTarget:self selector:@selector(threadTarget) object:nil];
-    _subThread.name = @"sub";
-    [_subThread start];
-}
-
-- (void)threadTarget
-{
-    [NSTimer scheduledTimerWithTimeInterval:1 repeats:YES block:^(NSTimer * _Nonnull timer) {
-        NSLog(@"timerFire:%@", [NSThread currentThread].name);
-    }];
-    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate distantFuture]];
 }
 
 - (IBAction)send:(id)sender {
-
-    [self performSelector:@selector(crash) onThread:_subThread withObject:nil waitUntilDone:YES];
 }
-
-- (void)crash
-{
-    NSLog(@"crash:%@", [NSThread currentThread].name);
-    NSMutableArray *arr = [NSArray array];
-    [arr addObject:@""];
-}
-
 
 - (IBAction)read:(id)sender {
     KeychainPasswordItem *item = [KeychainPasswordItem itemWithService:kServiceName accessGroup:kAccessGroupName account:@"123"];
