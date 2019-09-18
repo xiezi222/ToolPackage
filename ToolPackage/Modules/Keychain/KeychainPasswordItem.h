@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface KeychainPasswordItem : NSObject
 
 + (instancetype)itemWithService:(NSString *)service accessGroup:(NSString *)group account:(NSString *)account;
-- (NSString *)readPassword;
+- (nullable NSString *)readPassword;
 - (void)savePassword:(NSString *)password;
 - (void)renameAccount:(NSString *)account;
 - (void)deleteItem;

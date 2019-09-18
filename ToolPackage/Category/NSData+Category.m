@@ -31,11 +31,11 @@ static NSString *const kAESEncryptIv = @"sfe023f_9fd&fwfl";
     //将NSString 类型的key 转成指定长度的char 类型 存入keyPtr
     char keyPtr[kCCKeySizeAES128 + 1];
     bzero(keyPtr, sizeof(keyPtr));
-    BOOL res = [key getCString:keyPtr maxLength:sizeof(keyPtr) encoding:NSUTF8StringEncoding];
+    [key getCString:keyPtr maxLength:sizeof(keyPtr) encoding:NSUTF8StringEncoding];
 
     char ivPtr[kCCKeySizeAES128 + 1];
     bzero(ivPtr, sizeof(ivPtr));
-    res =  [iv getCString:ivPtr maxLength:sizeof(ivPtr) encoding:NSUTF8StringEncoding];
+    [iv getCString:ivPtr maxLength:sizeof(ivPtr) encoding:NSUTF8StringEncoding];
 
     NSUInteger dataLength = [self length];
     size_t bufferSize = dataLength + kCCBlockSizeAES128;

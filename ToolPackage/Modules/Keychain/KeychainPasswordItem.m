@@ -28,7 +28,7 @@
     return item;
 }
 
-- (NSString *)readPassword
+- (nullable NSString *)readPassword
 {
     NSMutableDictionary *quety = [KeychainPasswordItem keychainQueryWithService:self.service accessGroup:self.group account:self.account];
     [quety setObject:(id)kSecMatchLimitOne forKey:(id)kSecMatchLimit];

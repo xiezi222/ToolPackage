@@ -37,7 +37,7 @@
 //    DoorbellUserInfo *userInfo = [[DoorbellUserSession sharedSession] getUserInfo];
 //    NSString *cookies = [NSString stringWithFormat:@"access_token=%@;", [userInfo.accessToken URLEncoded]];
 //    return @{@"Cookie" : cookies};
-    return nil;
+    return @{};
 }
 
 - (NSDictionary *)getClientInfo

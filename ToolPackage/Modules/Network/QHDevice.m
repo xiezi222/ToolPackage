@@ -18,8 +18,7 @@ static NSString *kUDIDAccountName = @"QHSmartDoorbell.udid.accountName";
 
 + (NSString *)systemVersion
 {
-    return nil;
-//    return [[UIDevice currentDevice] systemVersion];
+    return [[UIDevice currentDevice] systemVersion];
 }
 
 + (NSString *)deviceModel
@@ -39,9 +38,8 @@ static NSString *kUDIDAccountName = @"QHSmartDoorbell.udid.accountName";
     if ([platform hasSuffix:@"iPad"]) {
         return @"iPad";
     }
-//    NSString *deviceModel = [[self deviceSeriesDictionary] safeStringForKey:platform];
-//    return deviceModel;
-    return nil;
+    NSString *deviceModel = [[self deviceSeriesDictionary] objectForKey:platform];
+    return deviceModel;
 }
 
 + (NSDictionary*)deviceSeriesDictionary

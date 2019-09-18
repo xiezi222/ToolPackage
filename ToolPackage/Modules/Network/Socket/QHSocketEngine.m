@@ -67,11 +67,13 @@ NSNotificationName const QHSocketEngineRevicedMessageNotification = @"QHSocketEn
     CFOptionFlags flags = kCFSocketConnectCallBack | kCFSocketDataCallBack | kCFSocketWriteCallBack | kCFSocketReadCallBack | kCFSocketAcceptCallBack;
     _socket = CFSocketCreate(kCFAllocatorDefault, PF_INET, SOCK_STREAM, IPPROTO_TCP, flags, SocketCallBack, &context);
     if (_socket == NULL) {
+        CFRelease(addrData);
         perror("socket create error:");
         return;
     }
 
     CFSocketError error = CFSocketConnectToAddress(_socket, addrData, 3);
+    CFRelease(addrData);
     if (error != kCFSocketSuccess) {
         perror("socket connect error:");
         return;
