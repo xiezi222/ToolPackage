@@ -13,6 +13,8 @@
 #import "UIViewController+Category.h"
 #import "NSURL+Category.h"
 
+//#import "PatternLockViewController.h"
+
 @interface ViewController ()
 
 @end
@@ -25,6 +27,10 @@
 }
 
 - (IBAction)connect:(id)sender {
+    
+//    PatternLockViewController *vc = [[PatternLockViewController alloc] init];
+//    vc.modalPresentationStyle = UIModalPresentationFullScreen;
+//    [self presentViewController:vc animated:YES completion:NULL];
 }
 
 - (IBAction)send:(id)sender {
@@ -32,19 +38,19 @@
 
 - (IBAction)read:(id)sender {
     KeychainPasswordItem *item = [KeychainPasswordItem itemWithService:kServiceName accessGroup:kAccessGroupName account:@"123"];
-    [item  readPassword];
+    [item readPassword];
 }
 - (IBAction)save:(id)sender {
     KeychainPasswordItem *item = [KeychainPasswordItem itemWithService:kServiceName accessGroup:kAccessGroupName account:@"xing"];
-    [item  savePassword:@"zhouyuan"];
+    [item savePassword:@"zhouyuan"];
 }
 - (IBAction)rename:(id)sender {
     KeychainPasswordItem *item = [KeychainPasswordItem itemWithService:kServiceName accessGroup:kAccessGroupName account:@"xing"];
-    [item  renameAccount:@"123"];
+    [item renameAccount:@"123"];
 }
 - (IBAction)delete:(id)sender {
     KeychainPasswordItem *item = [KeychainPasswordItem itemWithService:kServiceName accessGroup:kAccessGroupName account:@"123"];
-    [item  deleteItem];
+    [item deleteItem];
 }
 
 

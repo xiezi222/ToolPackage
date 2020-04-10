@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		218CADCC244009FD00DAE1F4 /* BiometricsLock.m in Sources */ = {isa = PBXBuildFile; fileRef = 218CADCB244009FD00DAE1F4 /* BiometricsLock.m */; };
+		21C0A16B23B9D9DA00F9C2AF /* PatternLockViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21C0A16923B9D9DA00F9C2AF /* PatternLockViewController.m */; };
+		21C0A16C23B9D9DA00F9C2AF /* PatternLockViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 21C0A16A23B9D9DA00F9C2AF /* PatternLockViewController.xib */; };
+		21C0A16F23B9DBE800F9C2AF /* PatternView.m in Sources */ = {isa = PBXBuildFile; fileRef = 21C0A16E23B9DBE800F9C2AF /* PatternView.m */; };
+		21E270542387935C0050A6AE /* Wi-FiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 21E270532387935C0050A6AE /* Wi-FiManager.m */; };
 		8117660122E5C8B200E3A0AA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8117660022E5C8B200E3A0AA /* AppDelegate.m */; };
 		8117660422E5C8B200E3A0AA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8117660322E5C8B200E3A0AA /* ViewController.m */; };
 		8117660722E5C8B200E3A0AA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8117660522E5C8B200E3A0AA /* Main.storyboard */; };
@@ -30,6 +35,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		218CADCA244009FD00DAE1F4 /* BiometricsLock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BiometricsLock.h; sourceTree = "<group>"; };
+		218CADCB244009FD00DAE1F4 /* BiometricsLock.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BiometricsLock.m; sourceTree = "<group>"; };
+		21C0A16823B9D9DA00F9C2AF /* PatternLockViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PatternLockViewController.h; sourceTree = "<group>"; };
+		21C0A16923B9D9DA00F9C2AF /* PatternLockViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PatternLockViewController.m; sourceTree = "<group>"; };
+		21C0A16A23B9D9DA00F9C2AF /* PatternLockViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PatternLockViewController.xib; sourceTree = "<group>"; };
+		21C0A16D23B9DBE800F9C2AF /* PatternView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PatternView.h; sourceTree = "<group>"; };
+		21C0A16E23B9DBE800F9C2AF /* PatternView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PatternView.m; sourceTree = "<group>"; };
+		21E270522387935C0050A6AE /* Wi-FiManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Wi-FiManager.h"; sourceTree = "<group>"; };
+		21E270532387935C0050A6AE /* Wi-FiManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Wi-FiManager.m"; sourceTree = "<group>"; };
 		811765FC22E5C8B200E3A0AA /* ToolPackage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToolPackage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		811765FF22E5C8B200E3A0AA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8117660022E5C8B200E3A0AA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -82,6 +96,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		218CADCD24400A0400DAE1F4 /* BiometricsLock */ = {
+			isa = PBXGroup;
+			children = (
+				218CADCA244009FD00DAE1F4 /* BiometricsLock.h */,
+				218CADCB244009FD00DAE1F4 /* BiometricsLock.m */,
+			);
+			path = BiometricsLock;
+			sourceTree = "<group>";
+		};
+		218CADCE24400CE200DAE1F4 /* Lock */ = {
+			isa = PBXGroup;
+			children = (
+				218CADCD24400A0400DAE1F4 /* BiometricsLock */,
+				21C0A16723B9D86D00F9C2AF /* PatternLock */,
+			);
+			path = Lock;
+			sourceTree = "<group>";
+		};
+		21C0A16723B9D86D00F9C2AF /* PatternLock */ = {
+			isa = PBXGroup;
+			children = (
+				21C0A16823B9D9DA00F9C2AF /* PatternLockViewController.h */,
+				21C0A16923B9D9DA00F9C2AF /* PatternLockViewController.m */,
+				21C0A16A23B9D9DA00F9C2AF /* PatternLockViewController.xib */,
+				21C0A16D23B9DBE800F9C2AF /* PatternView.h */,
+				21C0A16E23B9DBE800F9C2AF /* PatternView.m */,
+			);
+			path = PatternLock;
+			sourceTree = "<group>";
+		};
 		811765F322E5C8B200E3A0AA = {
 			isa = PBXGroup;
 			children = (
@@ -101,7 +145,6 @@
 		811765FE22E5C8B200E3A0AA /* ToolPackage */ = {
 			isa = PBXGroup;
 			children = (
-				8117663522E5C93800E3A0AA /* Device */,
 				811765FF22E5C8B200E3A0AA /* AppDelegate.h */,
 				8117660022E5C8B200E3A0AA /* AppDelegate.m */,
 				8117660222E5C8B200E3A0AA /* ViewController.h */,
@@ -139,13 +182,6 @@
 				81C01B4122E6EC5100063BB4 /* QHSocketMessageHandler.m */,
 			);
 			path = Socket;
-			sourceTree = "<group>";
-		};
-		8117663522E5C93800E3A0AA /* Device */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Device;
 			sourceTree = "<group>";
 		};
 		814E90852306B7F100ACE1E5 /* Http */ = {
@@ -191,9 +227,12 @@
 		8184F71B22E851B600E1AA3A /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				218CADCE24400CE200DAE1F4 /* Lock */,
 				814E90952306BA7000ACE1E5 /* Keychain */,
 				81C01B4322E723D300063BB4 /* Crash */,
 				8117662322E5C8C700E3A0AA /* Network */,
+				21E270522387935C0050A6AE /* Wi-FiManager.h */,
+				21E270532387935C0050A6AE /* Wi-FiManager.m */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -269,6 +308,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21C0A16C23B9D9DA00F9C2AF /* PatternLockViewController.xib in Resources */,
 				8117660C22E5C8B400E3A0AA /* LaunchScreen.storyboard in Resources */,
 				8117660922E5C8B400E3A0AA /* Assets.xcassets in Resources */,
 				8117660722E5C8B200E3A0AA /* Main.storyboard in Resources */,
@@ -282,16 +322,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21C0A16B23B9D9DA00F9C2AF /* PatternLockViewController.m in Sources */,
+				21C0A16F23B9DBE800F9C2AF /* PatternView.m in Sources */,
 				814E90932306B80A00ACE1E5 /* QHDevice.m in Sources */,
 				8117660422E5C8B200E3A0AA /* ViewController.m in Sources */,
 				814E908E2306B7F100ACE1E5 /* QHHttpSession.m in Sources */,
 				81F30428231D22DF00478A87 /* KeychainPasswordItem.m in Sources */,
+				21E270542387935C0050A6AE /* Wi-FiManager.m in Sources */,
 				81AAA74A232682CE00B32B3A /* NSURL+Category.m in Sources */,
 				8117660F22E5C8B400E3A0AA /* main.m in Sources */,
 				817058242306B61D00633B88 /* UIImage+Category.m in Sources */,
 				8117664B22E5D00800E3A0AA /* QHSocketEngine.m in Sources */,
 				81A3AD30231E33B100055EC4 /* NSString+Category.m in Sources */,
 				814E908D2306B7F100ACE1E5 /* QHHttpOperation.m in Sources */,
+				218CADCC244009FD00DAE1F4 /* BiometricsLock.m in Sources */,
 				81A3AD33231E390800055EC4 /* NSData+Category.m in Sources */,
 				8117660122E5C8B200E3A0AA /* AppDelegate.m in Sources */,
 				814E90942306B80A00ACE1E5 /* QHSmartDoorbellSDKInfo.m in Sources */,
