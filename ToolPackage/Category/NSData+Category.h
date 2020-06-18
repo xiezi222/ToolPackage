@@ -17,4 +17,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@interface NSData (Compression)
+
++ (NSData *)compressionData:(NSData *)data;
++ (NSData *)decompressionData:(NSData *)data;
+
+@end
+
 NS_ASSUME_NONNULL_END

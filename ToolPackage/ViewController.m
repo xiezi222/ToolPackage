@@ -13,10 +13,11 @@
 #import "UIViewController+Category.h"
 #import "NSURL+Category.h"
 
-//#import "PatternLockViewController.h"
+#import "PatternLockViewController.h"
 
 @interface ViewController ()
 
+@property (nonatomic, strong) UIView *sub;
 @end
 
 @implementation ViewController
@@ -24,16 +25,24 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.sub = [[UIView alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
+    self.sub.backgroundColor = [UIColor redColor];
+    [self.view addSubview:self.sub];
+    
 }
 
 - (IBAction)connect:(id)sender {
     
-//    PatternLockViewController *vc = [[PatternLockViewController alloc] init];
-//    vc.modalPresentationStyle = UIModalPresentationFullScreen;
-//    [self presentViewController:vc animated:YES completion:NULL];
+    PatternLockViewController *vc = [[PatternLockViewController alloc] init];
+    vc.modalPresentationStyle = UIModalPresentationFullScreen;
+    [self presentViewController:vc animated:YES completion:NULL];
 }
 
 - (IBAction)send:(id)sender {
+    
+    [UIView animateWithDuration:0.4 animations:^{
+        self.sub.frame = CGRectMake(150, 150, 200, 200);
+    }];
 }
 
 - (IBAction)read:(id)sender {

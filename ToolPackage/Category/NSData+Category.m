@@ -9,6 +9,8 @@
 #import "NSData+Category.h"
 #import <CommonCrypto/CommonCrypto.h>
 #import <CommonCrypto/CommonDigest.h>
+#import <compression.h>
+
 
 static NSString *const kAESEncryptKey = @"sfe023f_9fd&fwfl";
 static NSString *const kAESEncryptIv = @"sfe023f_9fd&fwfl";
@@ -95,6 +97,58 @@ static NSString *const kAESEncryptIv = @"sfe023f_9fd&fwfl";
     }
     free(buffer);
     return nil;
+}
+
+@end
+
+
+
+
+@implementation NSData (Compression)
+
+//buffer 压缩 for 8M以下未压缩/1M以下已压缩
++ (NSData *)compressionData:(NSData *)data {
+    
+    if (data == nil) return nil;
+    
+    if (@available(iOS 9.0, *)) {
+        
+        uint8_t *dstBuffer = (uint8_t *)malloc(data.length);
+        memset(dstBuffer, 0, data.length);
+        
+        size_t resultLength = compression_encode_buffer(dstBuffer, data.length, [data bytes], data.length, NULL, COMPRESSION_LZ4);
+        if (resultLength) {
+            NSData *compressionData = [NSData dataWithBytes:dstBuffer length:resultLength];
+            free(dstBuffer);
+            return compressionData;
+            
+        } else {
+            free(dstBuffer);
+            return data;
+        }
+    }
+    return data;
+}
+
++ (NSData *)decompresstionData:(NSData *)data {
+    if (data == nil) return nil;
+    if (@available(iOS 9.0, *)) {
+        
+        uint8_t *dstBuffer = (uint8_t *)malloc(1024*1024*8);
+        memset(dstBuffer, 0, data.length);
+        
+        size_t resultLength = compression_decode_buffer(dstBuffer, 1024*1024*10, [data bytes], data.length, NULL, COMPRESSION_LZ4);
+        if (resultLength) {
+            NSData *compressionData = [NSData dataWithBytes:dstBuffer length:resultLength];
+            free(dstBuffer);
+            return compressionData;
+            
+        } else {
+            free(dstBuffer);
+            return data;
+        }
+    }
+    return data;
 }
 
 @end

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		216F4EFF249B72E50001B9AE /* UIView+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 216F4EFE249B72E50001B9AE /* UIView+Category.m */; };
 		218CADCC244009FD00DAE1F4 /* BiometricsLock.m in Sources */ = {isa = PBXBuildFile; fileRef = 218CADCB244009FD00DAE1F4 /* BiometricsLock.m */; };
 		21C0A16B23B9D9DA00F9C2AF /* PatternLockViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21C0A16923B9D9DA00F9C2AF /* PatternLockViewController.m */; };
 		21C0A16C23B9D9DA00F9C2AF /* PatternLockViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 21C0A16A23B9D9DA00F9C2AF /* PatternLockViewController.xib */; };
@@ -35,8 +36,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		216F4EFD249B72E50001B9AE /* UIView+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Category.h"; sourceTree = "<group>"; };
+		216F4EFE249B72E50001B9AE /* UIView+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Category.m"; sourceTree = "<group>"; };
 		218CADCA244009FD00DAE1F4 /* BiometricsLock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BiometricsLock.h; sourceTree = "<group>"; };
 		218CADCB244009FD00DAE1F4 /* BiometricsLock.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BiometricsLock.m; sourceTree = "<group>"; };
+		218CADDA2443522100DAE1F4 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		21C0A16823B9D9DA00F9C2AF /* PatternLockViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PatternLockViewController.h; sourceTree = "<group>"; };
 		21C0A16923B9D9DA00F9C2AF /* PatternLockViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PatternLockViewController.m; sourceTree = "<group>"; };
 		21C0A16A23B9D9DA00F9C2AF /* PatternLockViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PatternLockViewController.xib; sourceTree = "<group>"; };
@@ -154,6 +158,7 @@
 				8117660822E5C8B400E3A0AA /* Assets.xcassets */,
 				8117660522E5C8B200E3A0AA /* Main.storyboard */,
 				8117660A22E5C8B400E3A0AA /* LaunchScreen.storyboard */,
+				218CADDA2443522100DAE1F4 /* PrefixHeader.pch */,
 				8117660D22E5C8B400E3A0AA /* Info.plist */,
 				8117660E22E5C8B400E3A0AA /* main.m */,
 			);
@@ -220,6 +225,8 @@
 				81A95F80232371A800B65C74 /* UIViewController+Category.m */,
 				81AAA748232682CE00B32B3A /* NSURL+Category.h */,
 				81AAA749232682CE00B32B3A /* NSURL+Category.m */,
+				216F4EFD249B72E50001B9AE /* UIView+Category.h */,
+				216F4EFE249B72E50001B9AE /* UIView+Category.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -336,6 +343,7 @@
 				81A3AD30231E33B100055EC4 /* NSString+Category.m in Sources */,
 				814E908D2306B7F100ACE1E5 /* QHHttpOperation.m in Sources */,
 				218CADCC244009FD00DAE1F4 /* BiometricsLock.m in Sources */,
+				216F4EFF249B72E50001B9AE /* UIView+Category.m in Sources */,
 				81A3AD33231E390800055EC4 /* NSData+Category.m in Sources */,
 				8117660122E5C8B200E3A0AA /* AppDelegate.m in Sources */,
 				814E90942306B80A00ACE1E5 /* QHSmartDoorbellSDKInfo.m in Sources */,
@@ -486,6 +494,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
+				GCC_PREFIX_HEADER = "${SRCROOT}/${PROJECT_NAME}/PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ToolPackage/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -504,6 +513,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
+				GCC_PREFIX_HEADER = "${SRCROOT}/${PROJECT_NAME}/PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ToolPackage/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
