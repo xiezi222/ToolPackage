@@ -7,8 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		211FF4D424A9D45400DA5603 /* TextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 211FF4D324A9D45400DA5603 /* TextView.m */; };
+		211FF4D824A9DD2C00DA5603 /* TextViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 211FF4D724A9DD2C00DA5603 /* TextViewViewController.m */; };
+		211FF4DB24A9DF4A00DA5603 /* NSObject+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 211FF4DA24A9DF4A00DA5603 /* NSObject+Category.m */; };
 		216F4EFF249B72E50001B9AE /* UIView+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 216F4EFE249B72E50001B9AE /* UIView+Category.m */; };
+		216F4F03249B73A60001B9AE /* ThreadHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 216F4F02249B73A60001B9AE /* ThreadHandler.m */; };
+		216F4F0A249B7C840001B9AE /* FullScreenNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 216F4F09249B7C840001B9AE /* FullScreenNavigationController.m */; };
+		216F4F10249B87160001B9AE /* SubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 216F4F0F249B87160001B9AE /* SubViewController.m */; };
+		216F4F13249C69DA0001B9AE /* NaviigationTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 216F4F12249C69DA0001B9AE /* NaviigationTransitioning.m */; };
 		218CADCC244009FD00DAE1F4 /* BiometricsLock.m in Sources */ = {isa = PBXBuildFile; fileRef = 218CADCB244009FD00DAE1F4 /* BiometricsLock.m */; };
+		21BDE44224AF0734009B001C /* TextViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 21BDE44124AF0734009B001C /* TextViewViewController.xib */; };
 		21C0A16B23B9D9DA00F9C2AF /* PatternLockViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21C0A16923B9D9DA00F9C2AF /* PatternLockViewController.m */; };
 		21C0A16C23B9D9DA00F9C2AF /* PatternLockViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 21C0A16A23B9D9DA00F9C2AF /* PatternLockViewController.xib */; };
 		21C0A16F23B9DBE800F9C2AF /* PatternView.m in Sources */ = {isa = PBXBuildFile; fileRef = 21C0A16E23B9DBE800F9C2AF /* PatternView.m */; };
@@ -36,11 +44,26 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		211FF4D224A9D45400DA5603 /* TextView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextView.h; sourceTree = "<group>"; };
+		211FF4D324A9D45400DA5603 /* TextView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TextView.m; sourceTree = "<group>"; };
+		211FF4D624A9DD2C00DA5603 /* TextViewViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextViewViewController.h; sourceTree = "<group>"; };
+		211FF4D724A9DD2C00DA5603 /* TextViewViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TextViewViewController.m; sourceTree = "<group>"; };
+		211FF4D924A9DF4A00DA5603 /* NSObject+Category.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+Category.h"; sourceTree = "<group>"; };
+		211FF4DA24A9DF4A00DA5603 /* NSObject+Category.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Category.m"; sourceTree = "<group>"; };
 		216F4EFD249B72E50001B9AE /* UIView+Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Category.h"; sourceTree = "<group>"; };
 		216F4EFE249B72E50001B9AE /* UIView+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Category.m"; sourceTree = "<group>"; };
+		216F4F01249B73A60001B9AE /* ThreadHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThreadHandler.h; sourceTree = "<group>"; };
+		216F4F02249B73A60001B9AE /* ThreadHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ThreadHandler.m; sourceTree = "<group>"; };
+		216F4F08249B7C840001B9AE /* FullScreenNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FullScreenNavigationController.h; sourceTree = "<group>"; };
+		216F4F09249B7C840001B9AE /* FullScreenNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FullScreenNavigationController.m; sourceTree = "<group>"; };
+		216F4F0E249B87160001B9AE /* SubViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SubViewController.h; sourceTree = "<group>"; };
+		216F4F0F249B87160001B9AE /* SubViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SubViewController.m; sourceTree = "<group>"; };
+		216F4F11249C69DA0001B9AE /* NaviigationTransitioning.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NaviigationTransitioning.h; sourceTree = "<group>"; };
+		216F4F12249C69DA0001B9AE /* NaviigationTransitioning.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NaviigationTransitioning.m; sourceTree = "<group>"; };
 		218CADCA244009FD00DAE1F4 /* BiometricsLock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BiometricsLock.h; sourceTree = "<group>"; };
 		218CADCB244009FD00DAE1F4 /* BiometricsLock.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BiometricsLock.m; sourceTree = "<group>"; };
 		218CADDA2443522100DAE1F4 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		21BDE44124AF0734009B001C /* TextViewViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextViewViewController.xib; sourceTree = "<group>"; };
 		21C0A16823B9D9DA00F9C2AF /* PatternLockViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PatternLockViewController.h; sourceTree = "<group>"; };
 		21C0A16923B9D9DA00F9C2AF /* PatternLockViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PatternLockViewController.m; sourceTree = "<group>"; };
 		21C0A16A23B9D9DA00F9C2AF /* PatternLockViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PatternLockViewController.xib; sourceTree = "<group>"; };
@@ -100,6 +123,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		211FF4D524A9D46200DA5603 /* WIFI */ = {
+			isa = PBXGroup;
+			children = (
+				21E270522387935C0050A6AE /* Wi-FiManager.h */,
+				21E270532387935C0050A6AE /* Wi-FiManager.m */,
+			);
+			path = WIFI;
+			sourceTree = "<group>";
+		};
+		216F4F00249B734A0001B9AE /* ThreadHandler */ = {
+			isa = PBXGroup;
+			children = (
+				216F4F01249B73A60001B9AE /* ThreadHandler.h */,
+				216F4F02249B73A60001B9AE /* ThreadHandler.m */,
+			);
+			path = ThreadHandler;
+			sourceTree = "<group>";
+		};
+		216F4F07249B7C4A0001B9AE /* FullScreenNavigationController */ = {
+			isa = PBXGroup;
+			children = (
+				216F4F08249B7C840001B9AE /* FullScreenNavigationController.h */,
+				216F4F09249B7C840001B9AE /* FullScreenNavigationController.m */,
+				216F4F11249C69DA0001B9AE /* NaviigationTransitioning.h */,
+				216F4F12249C69DA0001B9AE /* NaviigationTransitioning.m */,
+			);
+			path = FullScreenNavigationController;
+			sourceTree = "<group>";
+		};
 		218CADCD24400A0400DAE1F4 /* BiometricsLock */ = {
 			isa = PBXGroup;
 			children = (
@@ -153,6 +205,11 @@
 				8117660022E5C8B200E3A0AA /* AppDelegate.m */,
 				8117660222E5C8B200E3A0AA /* ViewController.h */,
 				8117660322E5C8B200E3A0AA /* ViewController.m */,
+				216F4F0E249B87160001B9AE /* SubViewController.h */,
+				216F4F0F249B87160001B9AE /* SubViewController.m */,
+				211FF4D624A9DD2C00DA5603 /* TextViewViewController.h */,
+				211FF4D724A9DD2C00DA5603 /* TextViewViewController.m */,
+				21BDE44124AF0734009B001C /* TextViewViewController.xib */,
 				817058252306B66E00633B88 /* Category */,
 				8184F71B22E851B600E1AA3A /* Modules */,
 				8117660822E5C8B400E3A0AA /* Assets.xcassets */,
@@ -227,6 +284,8 @@
 				81AAA749232682CE00B32B3A /* NSURL+Category.m */,
 				216F4EFD249B72E50001B9AE /* UIView+Category.h */,
 				216F4EFE249B72E50001B9AE /* UIView+Category.m */,
+				211FF4D924A9DF4A00DA5603 /* NSObject+Category.h */,
+				211FF4DA24A9DF4A00DA5603 /* NSObject+Category.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -234,12 +293,15 @@
 		8184F71B22E851B600E1AA3A /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				211FF4D224A9D45400DA5603 /* TextView.h */,
+				211FF4D324A9D45400DA5603 /* TextView.m */,
+				216F4F00249B734A0001B9AE /* ThreadHandler */,
 				218CADCE24400CE200DAE1F4 /* Lock */,
 				814E90952306BA7000ACE1E5 /* Keychain */,
 				81C01B4322E723D300063BB4 /* Crash */,
 				8117662322E5C8C700E3A0AA /* Network */,
-				21E270522387935C0050A6AE /* Wi-FiManager.h */,
-				21E270532387935C0050A6AE /* Wi-FiManager.m */,
+				216F4F07249B7C4A0001B9AE /* FullScreenNavigationController */,
+				211FF4D524A9D46200DA5603 /* WIFI */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -316,6 +378,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				21C0A16C23B9D9DA00F9C2AF /* PatternLockViewController.xib in Resources */,
+				21BDE44224AF0734009B001C /* TextViewViewController.xib in Resources */,
 				8117660C22E5C8B400E3A0AA /* LaunchScreen.storyboard in Resources */,
 				8117660922E5C8B400E3A0AA /* Assets.xcassets in Resources */,
 				8117660722E5C8B200E3A0AA /* Main.storyboard in Resources */,
@@ -335,15 +398,22 @@
 				8117660422E5C8B200E3A0AA /* ViewController.m in Sources */,
 				814E908E2306B7F100ACE1E5 /* QHHttpSession.m in Sources */,
 				81F30428231D22DF00478A87 /* KeychainPasswordItem.m in Sources */,
+				211FF4D824A9DD2C00DA5603 /* TextViewViewController.m in Sources */,
 				21E270542387935C0050A6AE /* Wi-FiManager.m in Sources */,
 				81AAA74A232682CE00B32B3A /* NSURL+Category.m in Sources */,
 				8117660F22E5C8B400E3A0AA /* main.m in Sources */,
+				216F4F0A249B7C840001B9AE /* FullScreenNavigationController.m in Sources */,
+				216F4F10249B87160001B9AE /* SubViewController.m in Sources */,
 				817058242306B61D00633B88 /* UIImage+Category.m in Sources */,
 				8117664B22E5D00800E3A0AA /* QHSocketEngine.m in Sources */,
 				81A3AD30231E33B100055EC4 /* NSString+Category.m in Sources */,
 				814E908D2306B7F100ACE1E5 /* QHHttpOperation.m in Sources */,
+				216F4F13249C69DA0001B9AE /* NaviigationTransitioning.m in Sources */,
 				218CADCC244009FD00DAE1F4 /* BiometricsLock.m in Sources */,
 				216F4EFF249B72E50001B9AE /* UIView+Category.m in Sources */,
+				211FF4DB24A9DF4A00DA5603 /* NSObject+Category.m in Sources */,
+				211FF4D424A9D45400DA5603 /* TextView.m in Sources */,
+				216F4F03249B73A60001B9AE /* ThreadHandler.m in Sources */,
 				81A3AD33231E390800055EC4 /* NSData+Category.m in Sources */,
 				8117660122E5C8B200E3A0AA /* AppDelegate.m in Sources */,
 				814E90942306B80A00ACE1E5 /* QHSmartDoorbellSDKInfo.m in Sources */,
