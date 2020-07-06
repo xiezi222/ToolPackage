@@ -130,7 +130,7 @@ static NSString *const kAESEncryptIv = @"sfe023f_9fd&fwfl";
     return data;
 }
 
-+ (NSData *)decompresstionData:(NSData *)data {
++ (NSData *)decompressionData:(NSData *)data {
     if (data == nil) return nil;
     if (@available(iOS 9.0, *)) {
         

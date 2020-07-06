@@ -16,4 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@interface UIImage (QRCode)
+
+- (NSString *)QRCodeFromImage;
+
+@end
 NS_ASSUME_NONNULL_END
