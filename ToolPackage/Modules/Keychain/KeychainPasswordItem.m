@@ -30,13 +30,13 @@
 
 - (nullable NSString *)readPassword
 {
-    NSMutableDictionary *quety = [KeychainPasswordItem keychainQueryWithService:self.service accessGroup:self.group account:self.account];
-    [quety setObject:(id)kSecMatchLimitOne forKey:(id)kSecMatchLimit];
-    [quety setObject:(id)kCFBooleanTrue forKey:(id)kSecReturnAttributes];
-    [quety setObject:(id)kCFBooleanTrue forKey:(id)kSecReturnData];
+    NSMutableDictionary *query = [KeychainPasswordItem keychainQueryWithService:self.service accessGroup:self.group account:self.account];
+    [query setObject:(id)kSecMatchLimitOne forKey:(id)kSecMatchLimit];
+    [query setObject:(id)kCFBooleanTrue forKey:(id)kSecReturnAttributes];
+    [query setObject:(id)kCFBooleanTrue forKey:(id)kSecReturnData];
 
     CFTypeRef queryResult;
-    OSStatus status = SecItemCopyMatching((__bridge CFDictionaryRef)quety, &queryResult);
+    OSStatus status = SecItemCopyMatching((__bridge CFDictionaryRef)query, &queryResult);
 
     if (status != noErr) {
         if (status == errSecItemNotFound) {

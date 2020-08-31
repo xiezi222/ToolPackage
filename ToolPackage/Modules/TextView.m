@@ -12,25 +12,18 @@
 @interface TextView ()<UITextViewDelegate>
 
 @property (nonatomic, weak) id<UITextViewDelegate> textViewDelegate;
-@property (nonatomic, strong) UITextView *placeholderTextView;
-
 
 @end
 
 @implementation TextView
 @synthesize delegate = _delegate;
 
+#pragma mark - Override
+
 - (void)dealloc
 {
-    [self removeObserver:self forKeyPath:@"firstResponder"];
-}
-
-- (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-    if (self) {
-        [self initiation];
-    }
-    return self;
+    [self removeObserver:self forKeyPath:@"text"];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame textContainer:(nullable NSTextContainer *)textContainer {
@@ -41,63 +34,47 @@
     return self;
 }
 
-- (instancetype)initWithCoder:(NSCoder *)coder {
-    self = [super initWithCoder:coder];
-    if (self) {
-        [self initiation];
-    }
-    return self;
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    [self initiation];
 }
 
-- (UITextView *)placeholderTextView {
-    if (!_placeholderTextView) {
-        _placeholderTextView = [[UITextView alloc] initWithFrame:self.bounds];
-        _placeholderTextView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        _placeholderTextView.userInteractionEnabled = NO;
-        _placeholderTextView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
-        _placeholderTextView.textColor = [UIColor lightGrayColor];
-        [self addSubview:_placeholderTextView];
-    }
-    return _placeholderTextView;
+- (void)setDelegate:(id<UITextViewDelegate>)delegate {
+    self.textViewDelegate = delegate;
 }
 
-- (void)initiation {
-    [self addObserver:self
-           forKeyPath:@"firstResponder"
-              options:NSKeyValueObservingOptionNew
-              context:nil];
-}
+#pragma mark - observe
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
-    [self updatePlaceholderView];
-}
-
-- (void)updatePlaceholderView {
-    BOOL isFirstResponder = self.isFirstResponder;
-    BOOL hasContent = [self.text length];
-    
-    if (isFirstResponder || hasContent) {
-        self.placeholderTextView.hidden = YES;
-    } else {
-        self.placeholderTextView.hidden = NO;
+    if ([keyPath isEqualToString:@"text"]) {
+        [self textViewDidChange:self];
     }
 }
 
-- (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder {
-    self.placeholderTextView.attributedText = attributedPlaceholder;
-    [self updatePlaceholderView];
-}
+#pragma mark - Private
 
-- (void)willMoveToWindow:(UIWindow *)newWindow {
-    [super willMoveToWindow:newWindow];
+- (void)initiation {
+    [self addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textViewDidChange:) name:UITextViewTextDidChangeNotification object:nil];
     _delegate = self;
-    [self updatePlaceholderView];
 }
 
-- (void)setDelegate:(id<UITextViewDelegate>)delegate
-{
-    _textViewDelegate = delegate;
+- (NSString *)limiteText:(NSString *)text withMaxLength:(NSUInteger)maxLength {
+    if (maxLength <= 0) {
+        return text;
+    }
+    __block NSString *newtext = @"";
+    [text enumerateSubstringsInRange:NSMakeRange(0, [text length])
+                             options:NSStringEnumerationByComposedCharacterSequences
+                          usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
+        if ((newtext.length <= maxLength) && (newtext.length + substring.length < maxLength)) {
+            newtext = [newtext stringByAppendingString:substring];
+        }
+    }];
+    return newtext;
 }
+
+#pragma mark - UITextViewDelegate
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     
@@ -124,12 +101,14 @@
 }
 
 - (void)textViewDidChange:(UITextView *)textView {
-    self.layoutManager.allowsNonContiguousLayout = NO;
-    
     if (_maxLengthOfText == 0) {
+        if ([self.textViewDelegate respondsToSelector:@selector(textViewDidChange:)]) {
+            return [self.textViewDelegate textViewDidChange:textView];
+        }
         return;
     }
     
+    self.layoutManager.allowsNonContiguousLayout = NO;
     UITextRange *markedRange = [textView markedTextRange];
     if (!markedRange) {
         
@@ -145,22 +124,5 @@
         }
     }
 }
-
-- (NSString *)limiteText:(NSString *)text withMaxLength:(NSUInteger)maxLength {
-    if (maxLength <= 0) {
-        return text;
-    }
-    __block NSString *newtext = @"";
-    [text enumerateSubstringsInRange:NSMakeRange(0, [text length])
-                             options:NSStringEnumerationByComposedCharacterSequences
-                          usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
-        if ((newtext.length <= maxLength) && (newtext.length + substring.length < maxLength)) {
-            newtext = [newtext stringByAppendingString:substring];
-        }
-    }];
-    return newtext;
-}
-
-
 
 @end

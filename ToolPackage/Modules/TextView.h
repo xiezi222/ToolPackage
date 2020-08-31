@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UITextView+Category.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TextView : UITextView
 
 @property (nonatomic, assign) NSUInteger maxLengthOfText;
-@property (nonatomic, strong) NSAttributedString *attributedPlaceholder;
 
 @end
 

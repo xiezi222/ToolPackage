@@ -48,16 +48,18 @@
     _textStorage = [[NSTextStorage alloc] initWithString:text];
     [_textStorage addLayoutManager:_layoutManager];
     
-    
     _textView = [[TextView alloc] initWithFrame:rect textContainer:_textContainer];
     _textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     _textView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     _textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
+    _textView.textColor = [UIColor greenColor];
     _textView.delegate = self;
     _textView.maxLengthOfText = 34;
     [self.view addSubview:_textView];
     
-    _textView.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"qeqeqeq"];
+    _textView.placeholder = [[NSAttributedString alloc] initWithString:@"qeqeqeq"
+                                                            attributes:@{NSForegroundColorAttributeName : [UIColor redColor],
+                                                                         NSFontAttributeName: [UIFont systemFontOfSize:17]}];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

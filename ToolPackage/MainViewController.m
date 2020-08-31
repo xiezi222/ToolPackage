@@ -16,6 +16,7 @@
 #import "PatternLockViewController.h"
 #import "KeyChainViewController.h"
 #import "TextViewViewController.h"
+#import "ComponentViewController.h"
 
 @interface MainViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -33,7 +34,7 @@
 }
 
 - (void)initDataSoutce {
-    _dataSourtce = @[@"lock", @"keychain", @"http", @"textView"];
+    _dataSourtce = @[@"lock", @"keychain", @"http", @"textView", @"Component"];
 }
 
 - (void)initSubViews {
@@ -81,6 +82,11 @@
     } else if ([key isEqualToString:@"textView"]) {
            
         TextViewViewController *vc = [[TextViewViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+        
+    } else if ([key isEqualToString:@"Component"]) {
+        
+        ComponentViewController *vc = [[ComponentViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }
     

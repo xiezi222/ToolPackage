@@ -10,9 +10,16 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NSObject (Category)
+@interface NSObject (Selector)
 
 - (id)performSelector:(SEL)aSelector withObjects:(NSArray *)objects;
+
+@end
+
+@interface NSObject (Swizzling)
+
++ (void)swizzlingInstanceMethod:(SEL)oldSel withNewSel:(SEL)newSel;
++ (void)swizzlingClassMethod:(SEL)oldSel withNewSel:(SEL)newSel;
 
 @end
 

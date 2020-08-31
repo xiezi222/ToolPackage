@@ -7,8 +7,9 @@
 //
 
 #import "NSObject+Category.h"
+#import <objc/runtime.h>
 
-@implementation NSObject (Category)
+@implementation NSObject (Selector)
 
 - (id)performSelector:(SEL)aSelector withObjects:(NSArray *)objects {
     
@@ -35,6 +36,35 @@
             [invocation getReturnValue:&callBackObject];
         }
         return callBackObject;
+    }
+}
+
+@end
+
+@implementation NSObject (Swizzling)
+
++ (void)swizzlingInstanceMethod:(SEL)oldSel withNewSel:(SEL)newSel {
+    
+    Method oldMethod = class_getInstanceMethod(self, oldSel);
+    Method newMethod = class_getInstanceMethod(self, newSel);
+    BOOL res = class_addMethod(self, oldSel, method_getImplementation(newMethod), method_getTypeEncoding(newMethod));
+    if (res) {
+        class_replaceMethod(self, newSel, method_getImplementation(oldMethod), method_getTypeEncoding(oldMethod));
+    } else {
+        method_exchangeImplementations(oldMethod, newMethod);
+    }
+}
+
++ (void)swizzlingClassMethod:(SEL)oldSel withNewSel:(SEL)newSel {
+    
+    Class c = object_getClass(self);
+    Method oldMethod = class_getClassMethod(self, oldSel);
+    Method newMethod = class_getClassMethod(self, newSel);
+    BOOL res = class_addMethod(c, oldSel, method_getImplementation(newMethod), method_getTypeEncoding(newMethod));
+    if (res) {
+        class_replaceMethod(c, newSel, method_getImplementation(oldMethod), method_getTypeEncoding(oldMethod));
+    } else {
+        method_exchangeImplementations(oldMethod, newMethod);
     }
 }
 
