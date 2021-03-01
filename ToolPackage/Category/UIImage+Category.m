@@ -29,7 +29,7 @@
 
 - (NSString *)QRCodeFromImage {
     
-    CIImage *ciImage = self.CIImage;
+    CIImage *ciImage = [CIImage imageWithCGImage:self.CGImage];
     if (ciImage == nil) {
         return nil;
     }
