@@ -2,70 +2,81 @@
 //  UITextView+Category.m
 //  ToolPackage
 //
-//  Created by xing on 2020/8/31.
-//  Copyright © 2020 xing. All rights reserved.
+//  Created by xing on 2022/7/29.
+//  Copyright © 2022 xing. All rights reserved.
 //
 
 #import "UITextView+Category.h"
-#import "NSObject+Category.h"
-#import <objc/runtime.h>
 
-static const char *kPlaceholderTextViewKey = "kPlaceholderTextViewKey";
+@implementation UITextView (Placeholder)
 
-@implementation UITextView (Category)
-
-+ (void)load {
-    [self swizzlingInstanceMethod:NSSelectorFromString(@"initWithFrame:textContainer:") withNewSel:NSSelectorFromString(@"initNewWithFrame:textContainer:")];
-}
-
-- (instancetype)initNewWithFrame:(CGRect)frame textContainer:(nullable NSTextContainer *)textContainer {
-    self = [self initNewWithFrame:frame textContainer:textContainer];
-    if (self) {
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            [self addPalceholderTextView];
-        });
+- (UILabel *)placeholderLabel {
+    
+    UILabel *label = [self valueForKey:@"_placeholderLabel"];
+    if (label == nil) {
+        label = [[UILabel alloc] initWithFrame:self.bounds];
+        label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        label.numberOfLines = 0;
+        label.textColor = [UIColor lightGrayColor];
+        [self addSubview:label];
+        [self setValue:label forKey:@"_placeholderLabel"];
     }
-    return self;
+    return label;
 }
 
-- (void)setPlaceholderTextView:(UITextView *)textView {
-    objc_setAssociatedObject(self, kPlaceholderTextViewKey, textView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+@end
+
+@implementation UITextView (Range)
+
+- (UITextRange *)textRangeFromRange:(NSRange)range {
+    
+    UITextPosition *begin = [self beginningOfDocument];
+    UITextPosition *start = [self positionFromPosition:begin offset:range.location];
+    UITextPosition *end = [self positionFromPosition:start offset:range.length];
+    UITextRange *textRange = [self textRangeFromPosition:start toPosition:end];
+    return textRange;
 }
 
-- (UITextView *)placeholderTextView {
-    return objc_getAssociatedObject(self, kPlaceholderTextViewKey);
+- (NSRange)rangeFromTextRange:(UITextRange *)textRange {
+    UITextPosition *begin = [self beginningOfDocument];
+    NSUInteger location = [self offsetFromPosition:begin toPosition:textRange.start];
+    NSUInteger length = [self offsetFromPosition:textRange.start toPosition:textRange.end];
+    NSRange range = NSMakeRange(location, length);
+    return range;
 }
 
-- (void)addPalceholderTextView {
-    
-    NSTextContainer *textContainer = [[NSTextContainer alloc] initWithSize:self.textContainer.size];
-    textContainer.lineFragmentPadding = self.textContainer.lineFragmentPadding;
-    textContainer.maximumNumberOfLines = self.textContainer.maximumNumberOfLines;
-    textContainer.widthTracksTextView = self.textContainer.widthTracksTextView;
-    
-    NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
-    layoutManager.allowsNonContiguousLayout = self.layoutManager.allowsNonContiguousLayout;
-    [layoutManager addTextContainer:textContainer];
-    
-    NSTextStorage *textStorage = [[NSTextStorage alloc] initWithString:@""];
-    [textStorage addLayoutManager:layoutManager];
-    
-    UITextView *textView = [[UITextView alloc] initNewWithFrame:self.bounds textContainer:textContainer];
-    textView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    textView.backgroundColor = [UIColor clearColor];
-    textView.userInteractionEnabled = NO;
-    
-    [self setPlaceholderTextView:textView];
-    [self addSubview:textView];
+@end
+
+
+@implementation NSLayoutManager (Line)
+
+// apple code
+//https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/TextLayout/Tasks/CountLines.html#//apple_ref/doc/uid/20001810-CJBGBIBB
+
+- (NSInteger)numberOfLines {
+    NSUInteger numberOfLines, index, numberOfGlyphs = [self numberOfGlyphs];
+    NSRange lineRange;
+    for (numberOfLines = 0, index = 0; index < numberOfGlyphs; numberOfLines++){
+        (void) [self lineFragmentRectForGlyphAtIndex:index effectiveRange:&lineRange];
+        index = NSMaxRange(lineRange);
+    }
+    return numberOfLines;
 }
 
-- (void)setPlaceholder:(NSAttributedString *)placeholder {
-    [[self placeholderTextView] setAttributedText:placeholder];
-}
-
-- (NSAttributedString *)placeholder {
-    return [self placeholderTextView].attributedText;
+- (NSInteger)numberOfLineAtIndex:(NSUInteger)currentIndex {
+    
+    NSUInteger numberOfLines, index, numberOfGlyphs = [self numberOfGlyphs];
+    NSRange lineRange;
+    for (numberOfLines = 0, index = 0; index < numberOfGlyphs; numberOfLines++) {
+        
+        (void) [self lineFragmentRectForGlyphAtIndex:index effectiveRange:&lineRange];
+        index = NSMaxRange(lineRange);
+        
+        if (NSLocationInRange(currentIndex, lineRange)) {
+            return numberOfLines;
+        }
+    }
+    return 0;
 }
 
 @end

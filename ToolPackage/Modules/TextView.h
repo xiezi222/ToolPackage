@@ -13,7 +13,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TextView : UITextView
 
-@property (nonatomic, assign) NSUInteger maxLengthOfText;
+@property (nonatomic, assign) NSUInteger maxLength;
+
+//动态高度
+@property (nonatomic, assign) BOOL autoResizeHeight;
+
+@property (nonatomic, assign) NSInteger minNumberOfLines;
+@property (nonatomic, assign) NSInteger maxNumberOfLines;
 
 @end
 

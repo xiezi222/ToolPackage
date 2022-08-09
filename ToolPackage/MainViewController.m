@@ -29,6 +29,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"Main";
+    
     [self initDataSoutce];
     [self initSubViews];
 }

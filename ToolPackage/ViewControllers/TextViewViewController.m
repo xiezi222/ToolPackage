@@ -12,11 +12,6 @@
 @interface TextViewViewController ()<UITextViewDelegate>
 
 @property (nonatomic, strong) TextView *textView;
-@property (nonatomic, strong) NSTextContainer *textContainer;
-@property (nonatomic, strong) NSLayoutManager *layoutManager;
-@property (nonatomic, strong) NSTextStorage *textStorage;
-
-
 @end
 
 @implementation TextViewViewController
@@ -24,106 +19,60 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-//    self.view.backgroundColor = [UIColor greenColor];
-    
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
-    scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    
-    scrollView.contentSize = CGSizeMake(self.view.width, self.view.height * 2);
-//    [self.view addSubview:scrollView];
-    
 
     CGRect rect = CGRectMake(0, 100, CGRectGetWidth(self.view.bounds), 200);
-    NSString *text = @"我是中文 wo shi A~Z 我是🤗🤗🤗🤗 莹北__㤫";
-    
-    _textContainer = [[NSTextContainer alloc] initWithSize:CGSizeMake(CGRectGetWidth(rect), 10000)];
-    _textContainer.lineFragmentPadding = 100;
-    _textContainer.maximumNumberOfLines = 4;
-    _textContainer.widthTracksTextView = YES;
-    
-    _layoutManager = [[NSLayoutManager alloc] init];
-    _layoutManager.allowsNonContiguousLayout = NO;// 据说是为了解决iOS7 输入时textview内容跳动的系统bug
-    [_layoutManager addTextContainer:_textContainer];
-    
-    _textStorage = [[NSTextStorage alloc] initWithString:text];
-    [_textStorage addLayoutManager:_layoutManager];
-    
-    _textView = [[TextView alloc] initWithFrame:rect textContainer:_textContainer];
+    _textView = [[TextView alloc] initWithFrame:rect textContainer:nil];
     _textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     _textView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    _textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
-    _textView.textColor = [UIColor greenColor];
-    _textView.delegate = self;
-    _textView.maxLengthOfText = 34;
-    [self.view addSubview:_textView];
+    _textView.font = [UIFont systemFontOfSize:20];
+//    _textView.contentInset = UIEdgeInsetsMake(20, 20, 20, 10);
     
-    _textView.placeholder = [[NSAttributedString alloc] initWithString:@"qeqeqeq"
-                                                            attributes:@{NSForegroundColorAttributeName : [UIColor redColor],
-                                                                         NSFontAttributeName: [UIFont systemFontOfSize:17]}];
+    _textView.autoResizeHeight = YES;
+//    _textView.minNumberOfLines = 2;
+    _textView.maxNumberOfLines = 3;
+//    _textView.editable = NO;
+    
+//    _textView.maxLength = 10;
+//    _textView.delegate = self;
+    
+//    _textView.placeholderLabel.text = @"This is a placeholder";
+    _textView.text = @"海外网8月5日电 据美国《华盛顿邮报》报道，当地时间4日晚间，华盛顿出现极端天气，4人在白宫附近的拉法耶广场西北部遭雷击重伤，情况危急，有生命危险。";
+    [self.view addSubview:_textView];
 }
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-}
-
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self.textView resignFirstResponder];
 }
 
-//- (NSArray *)getSeparatedLinesWithWidth:(CGFloat)width
-//{
-//    NSString *text = self.textStorage.string;
-//    if (!text || text.length<1) {
-//        return 0;
-//    }
-//    UIFont *font = self.textView.font;
-//    CTFontRef myFont = CTFontCreateWithName((__bridge CFStringRef)([font fontName]), [font pointSize], NULL);
-//    NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc] initWithString:text];
-//    [attStr addAttribute:(NSString *)kCTFontAttributeName value:(__bridge id)myFont range:NSMakeRange(0, attStr.length)];
-//    CTFramesetterRef frameSetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)attStr);
-//    CGMutablePathRef path = CGPathCreateMutable();
-//    CGPathAddRect(path, NULL, CGRectMake(0,0,width,CGFLOAT_MAX));
-//    CTFrameRef frame = CTFramesetterCreateFrame(frameSetter, CFRangeMake(0, 0), path, NULL);
-//    NSArray *lines = (__bridge NSArray *)CTFrameGetLines(frame);
-//    NSMutableArray *linesArray = [[NSMutableArray alloc]init];
-//    for (id line in lines) {
-//        CTLineRef lineRef = (__bridge CTLineRef )line;
-//        CFRange lineRange = CTLineGetStringRange(lineRef);
-//        NSRange range = NSMakeRange(lineRange.location, lineRange.length);
-//        NSString *lineString = [text substringWithRange:range];
-//        [linesArray addObject:lineString];
-//
-//    }
-//    return linesArray;
-//
-//}
-
 #pragma mark - UITextViewDelegate
 
-- (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
-    return YES;
-}
-- (BOOL)textViewShouldEndEditing:(UITextView *)textView {
-    return YES;
-}
-
-- (void)textViewDidBeginEditing:(UITextView *)textView {
-    
-}
-- (void)textViewDidEndEditing:(UITextView *)textView {
-    
-}
-
-//- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+//- (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
+//    NSLog(@"%s", __func__);
 //    return YES;
 //}
-- (void)textViewDidChange:(UITextView *)textView {
-    
-}
-
-- (void)textViewDidChangeSelection:(UITextView *)textView {
-    
-}
+//- (BOOL)textViewShouldEndEditing:(UITextView *)textView {
+//    NSLog(@"%s", __func__);
+//    return YES;
+//}
+//
+//- (void)textViewDidBeginEditing:(UITextView *)textView {
+//    NSLog(@"%s", __func__);
+//}
+//- (void)textViewDidEndEditing:(UITextView *)textView {
+//    NSLog(@"%s", __func__);
+//}
+//
+//- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+//    NSLog(@"%s", __func__);
+//    return YES;
+//}
+//
+//- (void)textViewDidChange:(UITextView *)textView {
+//    NSLog(@"%s", __func__);
+//}
+//
+//- (void)textViewDidChangeSelection:(UITextView *)textView {
+//    NSLog(@"%s", __func__);
+//}
 
 @end
