@@ -21,4 +21,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)QRCodeFromImage;
 
 @end
+
+@interface UIImage (Compress)
+
++ (NSData *)compressWithData:(NSData *)imageData;
+
+@end
+
+
+
 NS_ASSUME_NONNULL_END

@@ -50,6 +50,76 @@
 
 @end
 
+@implementation UIImage (Compress)
+
++ (NSData *)compressWithData:(NSData *)imageData {
+        
+    CGImageSourceRef sourceRef = CGImageSourceCreateWithData((__bridge CFDataRef)imageData, NULL);
+    if (sourceRef == nil) return nil;
+    
+    CFStringRef type = CGImageSourceGetType(sourceRef);
+    NSDictionary *sourceProperties = (__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(sourceRef, 0, NULL);
+    CGFloat width = [[sourceProperties objectForKey:(__bridge id)kCGImagePropertyPixelWidth] floatValue];
+    CGFloat height = [[sourceProperties objectForKey:(__bridge id)kCGImagePropertyPixelHeight] floatValue];
+    
+    CGFloat scale = [UIImage compressScale:CGSizeMake(width, height)];
+    CGFloat maxPixelSize = MAX(floor(width / scale), floor(height / scale));
+    
+    NSDictionary *options = @{(__bridge id)kCGImageSourceThumbnailMaxPixelSize : @(maxPixelSize),
+                              (__bridge id)kCGImageSourceCreateThumbnailFromImageAlways:(__bridge id)kCFBooleanTrue,
+                              (__bridge id)kCGImageSourceCreateThumbnailWithTransform:(__bridge id)kCFBooleanTrue};
+    CGImageRef imageRef = CGImageSourceCreateThumbnailAtIndex(sourceRef, 0, (__bridge CFDictionaryRef)options);
+    CFRelease(sourceRef);
+    if (imageRef == NULL) return nil;
+    
+    CFMutableDataRef destinationData = CFDataCreateMutable(NULL, 0);
+    CGImageDestinationRef destinationRef = CGImageDestinationCreateWithData(destinationData, type, 1, NULL);
+    
+    if (destinationRef == NULL) {
+        CFRelease(imageRef);
+        return nil;
+    }
+    
+    NSDictionary *destinationProperties = @{(__bridge id)kCGImageDestinationLossyCompressionQuality : @(0.38)};
+    CGImageDestinationAddImage(destinationRef, imageRef, (__bridge CFDictionaryRef)destinationProperties);
+    CFRelease(imageRef);
+    bool res = CGImageDestinationFinalize(destinationRef);
+    CFRelease(destinationRef);
+    return res ? CFAutorelease(destinationData) : nil;
+}
+
++ (CGFloat)compressScale:(CGSize)imageSize {
+    
+    int srcWidth = (int)imageSize.width;
+    int srcHeight = (int)imageSize.height;
+    
+    srcWidth = (srcWidth ^ 1) ? (srcWidth + 1) : srcWidth;
+    srcHeight = (srcHeight ^ 1) ? (srcHeight + 1) : srcHeight;
+    
+    int longSide = MAX(srcWidth, srcHeight);
+    int shortSide = MIN(srcWidth, srcHeight);
+
+    float scale = ((float) shortSide / longSide);
+    if (scale <= 1 && scale > 0.5625) {
+      if (longSide < 1664) {
+        return 1;
+      } else if (longSide < 4990) {
+        return 2;
+      } else if (longSide > 4990 && longSide < 10240) {
+        return 4;
+      } else {
+        return longSide / 1280 == 0 ? 1 : longSide / 1280;
+      }
+    } else if (scale <= 0.5625 && scale > 0.5) {
+      return longSide / 1280 == 0 ? 1 : longSide / 1280;
+    } else {
+      return (int) ceil(longSide / (1280.0 / scale));
+    }
+    return 1;
+}
+
+@end
+
 @implementation UIImage (Type)
 
 

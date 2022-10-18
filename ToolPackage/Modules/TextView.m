@@ -8,7 +8,62 @@
 
 #import "TextView.h"
 
+@interface TextViewDelegate : NSProxy <UITextViewDelegate>
+
+@property (nonatomic, assign) id<UITextViewDelegate> delegate;
+@property (nonatomic, weak) UITextView *host;
+
+@property (nonatomic, strong) NSArray *targetSelNames;
+
+@end
+
+@implementation TextViewDelegate
+
++ (instancetype)proxyWithHost:(UITextView *)host {
+    TextViewDelegate *proxy = [TextViewDelegate alloc];
+    proxy.host = host;
+    proxy.targetSelNames = @[@"textView:shouldChangeTextInRange:replacementText:"];
+    return proxy;
+}
+
+- (void)forwardInvocation:(NSInvocation *)invocation {
+    NSString *selName = NSStringFromSelector(invocation.selector);
+    if ([self.targetSelNames containsObject:selName]) {
+        [invocation invokeWithTarget:self.host];
+    } else {
+        [invocation invokeWithTarget:self.delegate];
+    }
+}
+
+- (nullable NSMethodSignature *)methodSignatureForSelector:(SEL)sel {
+    
+    NSString *selName = NSStringFromSelector(sel);
+    if ([self.targetSelNames containsObject:selName]) {
+        return [self.host methodSignatureForSelector:sel];
+    }
+    return [(id)self.delegate methodSignatureForSelector:sel];
+}
+
+- (BOOL)respondsToSelector:(SEL)aSelector {
+    NSString *selName = NSStringFromSelector(aSelector);
+    if ([self.targetSelNames containsObject:selName]) {
+        BOOL res =  [self.host respondsToSelector:aSelector];
+        return res;
+    }
+    return [(id)self.delegate respondsToSelector:aSelector];
+}
+
+@end
+
+@interface TextView ()<UITextViewDelegate>
+
+@property (nonatomic, strong) TextViewDelegate *delegateProxy;
+
+@end
+
 @implementation TextView
+
+@synthesize delegate = _delegate;
 
 - (void)dealloc {
     [self removeObservers];
@@ -22,11 +77,19 @@
     return self;
 }
 
+- (void)setDelegate:(id<UITextViewDelegate>)delegate {
+    self.delegateProxy.delegate = delegate;
+}
+
 #pragma mark - Private
 
 - (void)initiation {
     _maxLength = 0;
+    _minNumberOfLines = 1;
+    self.delegateProxy = [TextViewDelegate proxyWithHost:self];
+    _delegate = self.delegateProxy;
     
+//    self.textColor = [UIColor redColor];
     self.textContainer.lineBreakMode = NSLineBreakByTruncatingTail;
     self.textContainer.heightTracksTextView = YES;
     self.textContainer.widthTracksTextView = YES;
@@ -37,6 +100,8 @@
 #pragma mark - Observers
 
 - (void)addObservers {
+    //kvo 本质是子类重写set方法 因此setText时触发
+    //notification 响应用户行为：因此键盘和粘贴触发
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textViewTextDidChange:) name:UITextViewTextDidChangeNotification object:nil];
     [self addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:nil];
 }
@@ -52,65 +117,58 @@
     [self textViewTextDidChange:nil];
 }
 
+#pragma mark - UITextViewDelegate
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    return [self _shouldChangeTextInRange:range replacementText:text];
+}
+
 #pragma mark - Input
 
 - (void)paste:(id)sender {
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     NSString *string = pasteboard.string;
-    BOOL should = [self shouldChangeTextInRange:self.selectedTextRange replacementText:string];
+    BOOL should = [self _shouldChangeTextInRange:self.selectedRange replacementText:string];
     if (should) {
         [super paste:sender];
     }
 }
 
-- (void)insertText:(NSString *)text {
-    BOOL should = [self shouldChangeTextInRange:self.selectedTextRange replacementText:text];
-    if (should) {
-        [super insertText:text];
-    }
-}
-
-- (BOOL)shouldChangeTextInRange:(UITextRange *)textRange replacementText:(NSString *)text {
+- (BOOL)_shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    NSLog(@"_shouldChangeTextInRange:%@:%@", NSStringFromRange(range), text);
     
-    if (self.maxLength) {//有字数限制
-        
-        NSRange range = [self rangeFromTextRange:textRange];
-        NSString *newString = [self.text stringByReplacingCharactersInRange:range withString:text];
-        //长度增加
-        if (newString.length > self.text.length) {
-            
-            //原长已超出或达到最长  禁止增加
-            if (self.text.length >= self.maxLength) return NO;
-            
-            ///输入过程中超出
-            if (newString.length > self.maxLength) {
-                
-                NSInteger offset = newString.length - self.maxLength;//超出字数
-                NSInteger index = text.length - offset;//预计截取位置
-                
-                if (index <= 0) return NO;//截取位置比输入字符串还短 属于异常 禁止
-                
-                NSRange sequenceRange = [text rangeOfComposedCharacterSequenceAtIndex:index];//emoji判断
-                NSString *newText = [text substringToIndex:sequenceRange.location];
-                UITextPosition *begin = [self beginningOfDocument];
-                UITextPosition *start = [self positionFromPosition:begin offset:range.location];
-                UITextPosition *end = [self positionFromPosition:start offset:range.length];
-                UITextRange *textRange = [self textRangeFromPosition:start toPosition:end];
-                [self replaceRange:textRange withText:newText];
-                return NO;
-            }
-        }
-        //长度不变
-        else if (newString.length == self.text.length) {
-            //原长已超出 禁止修改
-            if (self.text.length > self.maxLength) return NO;
-        }
-        //长度减少
-        else {
-            
-        }
-    }
+    //不限制
+    if (self.maxLength <= 0) return YES;
+    //删除
+    if (text.length == 0) return YES;
+    //判断输入markedText
+    if (self.markedTextRange && range.length == 0) return YES;
+    
+    NSString *oldString = [self.text stringByReplacingCharactersInRange:range withString:@""];
+    NSString *newString = [self.text stringByReplacingCharactersInRange:range withString:text];
+    
+    //长度减少
+    if (newString.length < oldString.length) return YES;
+    if (newString.length > self.maxLength) return NO;
     return YES;
+    
+//    ///输入过程中超出
+//    if (newString.length > self.maxLength) {
+//
+//        NSInteger offset = newString.length - self.maxLength;//超出字数
+//        NSInteger index = text.length - offset;//预计截取位置
+//
+//        if (index <= 0) return NO;//截取位置比输入字符串还短 属于异常 禁止
+//
+//        NSRange sequenceRange = [text rangeOfComposedCharacterSequenceAtIndex:index];//emoji判断
+//        NSString *newText = [text substringToIndex:sequenceRange.location];
+//        UITextPosition *begin = [self beginningOfDocument];
+//        UITextPosition *start = [self positionFromPosition:begin offset:range.location];
+//        UITextPosition *end = [self positionFromPosition:start offset:range.length];
+//        UITextRange *textRange = [self textRangeFromPosition:start toPosition:end];
+//        [super replaceRange:textRange withText:newText];
+//        return NO;
+//    }
 }
 
 #pragma mark - Mutable  Height
@@ -167,17 +225,13 @@
 
 - (void)scrollToBottomIfNeeded {
     
+    if (!self.autoResizeHeight) return;
     if (self.editable == NO) return;
     if (!self.isFirstResponder) return;
     if (self.selectedTextRange == nil) return;
     
-    
-    
     NSUInteger numberOfLines = [self.layoutManager numberOfLines];
     NSUInteger currentLines = [self.layoutManager numberOfLineAtIndex:self.selectedRange.location];
-    
-    NSLog(@"total:%d, current:%d", numberOfLines, currentLines);
-    
     //最后一行
     if (currentLines == numberOfLines -1) {
         CGPoint offset = self.contentOffset;
